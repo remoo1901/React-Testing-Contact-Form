@@ -1,6 +1,7 @@
 import React from "react";
 import "mutationobserver-shim";
-import { render } from "@testing-library/react";
+import '@testing-library/jest-dom/extend-expect'
+import { render, fireEvent, wait } from "@testing-library/react";
 import ContactForm from "./ContactForm";
 
 test("ContactForm renders without crashing!", () => {
@@ -14,3 +15,24 @@ test("firstName, lastName and email are rendered", () => {
   getByText(/First Name*/i);
   getByText(/Message/i);
 });
+
+describe("It's submit values are validated for the form", () => {
+  test("firstName is defined", () => {
+    const component = render(<ContactForm />)
+    const firstName = component.getByTestId("firstName")
+    expect(firstName).toBeDefined()
+  })
+})
+
+describe("submits the values when submit is clicked", () => {
+  test(" message is submitted when submit is clicked", async () => {
+    const component = render(<ContactForm />)
+    const message = component.getByTestId("Message")
+    const button = component.getByTestId("submit")
+
+    fireEvent.click(button)
+
+    await wait(() => expect(message).toBeInTheDocument())
+  })
+})
+
