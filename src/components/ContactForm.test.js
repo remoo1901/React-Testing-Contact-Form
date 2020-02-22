@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect'
 import { render, fireEvent, wait } from "@testing-library/react";
 import ContactForm from "./ContactForm";
 
-test("ContactForm renders without crashing!", () => {
+it("ContactForm renders without crashing!", () => {
   render(<ContactForm />);
 });
 
